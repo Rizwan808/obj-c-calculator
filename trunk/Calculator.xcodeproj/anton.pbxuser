@@ -31,9 +31,9 @@
 	28D7ACF70DDB3853001CB0EB /* CalculatorViewController.m */ = {
 		uiCtxt = {
 			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{561, 78}\";\n            s = 0;\n        },\n                {\n            r = \"{687, 425}\";\n            s = 0;\n        },\n                {\n            r = \"{1164, 218}\";\n            s = 0;\n        },\n                {\n            r = \"{2728, 1}\";\n            s = 0;\n        },\n                {\n            r = \"{2779, 38}\";\n            s = 0;\n        },\n                {\n            r = \"{2872, 1}\";\n            s = 0;\n        },\n                {\n            r = \"{2893, 37}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2938}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {875, 1066}}";
-			sepNavSelRange = "{1604, 0}";
-			sepNavVisRange = "{991, 1156}";
+			sepNavIntBoundsRect = "{{0, 0}, {875, 1079}}";
+			sepNavSelRange = "{679, 16}";
+			sepNavVisRange = "{393, 1211}";
 		};
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
