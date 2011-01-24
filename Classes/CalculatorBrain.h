@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define VARIABLE_PREFIX @"%"
+
 @interface CalculatorBrain : NSObject {
 	double operand;
 }
@@ -18,10 +20,11 @@
 @property (nonatomic) BOOL isItRadians;
 @property (nonatomic) double operand;
 @property (nonatomic) double memoryValue;
-@property (nonatomic, copy) NSString *warningOperation;
+@property (nonatomic, retain) NSString *warningOperation;
 
-@property (readonly) id expression;
+@property (readonly, copy) NSMutableArray *internalExpression;
 
+/*
 + (double)evaluateExpression:(id)anExpression
 		 usingVariableValues:(NSDictionary *)variables;
 
@@ -30,5 +33,6 @@
 
 + (id)propertyListForExpression:(id)anExpression;
 + (id)expressionForPropertyList:(id)propertyList;
+*/
 
 @end

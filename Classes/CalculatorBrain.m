@@ -22,10 +22,9 @@
 @synthesize warningOperation;
 @synthesize waitingOperation;
 
-@synthesize expression;
+@synthesize internalExpression;
 
-- (void)performWaitingOperation
-{
+- (void)performWaitingOperation {
 	if ([@"+" isEqual:waitingOperation]) {
 		operand = waitingOperand + operand;
 	} else if ([@"-" isEqual:waitingOperation]) {
@@ -39,16 +38,39 @@
 	} else if ([@"*" isEqual:waitingOperation]) {
 		operand = waitingOperand * operand;
 	}
+/*	
+	NSNumber *objectOperand = [[[NSNumber alloc] initWithDouble:operand] autorelease];
+	[internalExpression addObject:objectOperand];
+*/
 }
 
-- (void)setVariableAsOperand:(NSString *)variableName
-{
+- (BOOL)isThisObjectAVariable:(id)object {
+	return [object isKindOfClass:[NSString class]] && [[object substringToIndex:1] isEqual:VARIABLE_PREFIX];
 }
 
-- (double)performOperation:(NSString *)operation
-{
+- (void)setVariableAsOperand:(NSString *)variableName {
+	if (internalExpression.count > 0) {
+		id lastObject = [internalExpression objectAtIndex:internalExpression.count - 1];
+
+		if ([lastObject isKindOfClass:[NSNumber class]])
+		{
+			warningOperation = @"Can't save variable with operand";
+			return;
+		}
+
+		if ([self isThisObjectAVariable:lastObject])
+		{
+			warningOperation = @"Can't operate variable twice";
+			return;
+		}
+	}
+	
+	[internalExpression addObject:[VARIABLE_PREFIX stringByAppendingString:variableName]];
+}
+
+- (double)performOperation:(NSString *)operation {
 	warningOperation = @"";
-
+	
 	if ([@"sqrt" isEqual:operation]) {
 		if (operand >= 0) {
 			operand = sqrt(operand);
@@ -67,6 +89,7 @@
 		}
 	} else if ([@"C" isEqual:operation]) {
 		operand = 0;
+		[internalExpression removeAllObjects];
 	} else if ([@"π" isEqual:operation]) {
 		operand = M_PI;
 	} else if ([@"sin" isEqual:operation]) {
@@ -91,9 +114,11 @@
 		memoryValue = memoryValue + operand;
 	} else {
 		[self performWaitingOperation];
-		waitingOperation = operation;
+		self.waitingOperation = operation;
 		waitingOperand = operand;
 	}
+	
+	[internalExpression addObject:operation];
 	
 	return operand;
 }
