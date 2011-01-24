@@ -20,8 +20,7 @@
 @synthesize userIsInTheMiddleOfTypingANumber;
 @synthesize thePointHasBeenSet;
 
-- (CalculatorBrain *)brain
-{
+- (CalculatorBrain *)brain {
 	if (!brain) {
 		brain = [[CalculatorBrain alloc] init];
 	}
@@ -29,8 +28,7 @@
 	return brain;
 }
 
-- (IBAction)digitPressed:(UIButton *)sender
-{
+- (IBAction)digitPressed:(UIButton *)sender {
 	NSString *digit = [sender titleLabel].text;
 	
 	if ([@"." isEqual:digit]) {
@@ -53,8 +51,7 @@
 	}
 }
 
-- (IBAction)backspacePressed:(UIButton *)sender
-{
+- (IBAction)backspacePressed:(UIButton *)sender {
 	NSUInteger operandLength = [display.text length];
 	
 	NSString *result;
@@ -67,8 +64,7 @@
 	display.text = result;
 }
 
-- (IBAction)operationPressed:(UIButton *)sender
-{
+- (IBAction)operationPressed:(UIButton *)sender {
 	NSString *operation = sender.titleLabel.text;
 	
 	if (userIsInTheMiddleOfTypingANumber) {
@@ -82,6 +78,7 @@
 	
 	double result = [self.brain performOperation:operation];
 	display.text =[NSString stringWithFormat:@"%g", result];
+
 	warning.text = self.brain.warningOperation;
 
 	if ([@"M" isEqual:operation]) {
@@ -89,9 +86,6 @@
 	} else if ([@"M+" isEqual:operation] || [@"MC" isEqual:operation]) {
 		memory.text = [NSString stringWithFormat:@"%g", self.brain.memoryValue];
 	}
-	
-	NSRange displayPointRange = [display.text rangeOfString:@"."];
-	thePointHasBeenSet = displayPointRange.length > 0;
 	
 	if ([@"/" isEqual:operation] ||
 		[@"*" isEqual:operation] ||
@@ -101,28 +95,30 @@
 	} else {
 		curOperation.text = @"";
 	}
+	
+	NSRange displayPointRange = [display.text rangeOfString:@"."];
+	thePointHasBeenSet = displayPointRange.length > 0;
 }
 
-- (IBAction)variablePressed:(UIButton *)sender
-{
+- (IBAction)variablePressed:(UIButton *)sender {
 	[self.brain setVariableAsOperand:sender.titleLabel.text];
+	userIsInTheMiddleOfTypingANumber = NO;
+
+	display.text = sender.titleLabel.text;
+	warning.text = self.brain.warningOperation;
 }
 
-- (IBAction)evaluatePressed:(UIButton *)sender
-{
+- (IBAction)evaluatePressed:(UIButton *)sender {
 }
 
-- (IBAction)radianSwitched:(UISwitch *)sender
-{
+- (IBAction)radianSwitched:(UISwitch *)sender {
 	self.brain.isItRadians = sender.on;
 }
 
-- (IBAction)evaluateTestPressed:(UIButton *)sender
-{
+- (IBAction)evaluateTestPressed:(UIButton *)sender {
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 	[brain release];
 	[super dealloc];
 }
