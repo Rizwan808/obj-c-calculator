@@ -84,7 +84,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					688,
+					805,
 					20,
 					48,
 					43,
@@ -92,6 +92,30 @@
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					781,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_SCM_ColumnID,
 					PBXFileDataSource_FiletypeID,
 					PBXFileDataSource_Filename_ColumnID,
 					PBXFileDataSource_Built_ColumnID,
@@ -272,10 +296,10 @@
 	};
 	3A4A041512DCD47C000C9684 /* CalculatorBrain.m */ = {
 		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{554, 555}\";\n            s = 0;\n        },\n                {\n            r = \"{1154, 107}\";\n            s = 0;\n        },\n                {\n            r = \"{1319, 466}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 3154}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {875, 1157}}";
-			sepNavSelRange = "{1361, 0}";
-			sepNavVisRange = "{989, 1040}";
+			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{554, 555}\";\n            s = 0;\n        },\n                {\n            r = \"{1154, 107}\";\n            s = 0;\n        },\n                {\n            r = \"{1319, 466}\";\n            s = 0;\n        },\n                {\n            r = \"{1838, 1308}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 3154}\";\n    s = 0;\n}";
+			sepNavIntBoundsRect = "{{0, 0}, {983, 557}}";
+			sepNavSelRange = "{714, 0}";
+			sepNavVisRange = "{0, 722}";
 			sepNavWindowFrame = "{{15, 615}, {750, 558}}";
 		};
 	};
@@ -461,9 +485,9 @@
 	};
 	3A77006B12EE072C007AF439 /* UnitTests.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1002, 377}}";
-			sepNavSelRange = "{527, 0}";
-			sepNavVisRange = "{0, 348}";
+			sepNavIntBoundsRect = "{{0, 0}, {983, 557}}";
+			sepNavSelRange = "{558, 0}";
+			sepNavVisRange = "{0, 597}";
 			sepNavWindowFrame = "{{15, 615}, {750, 558}}";
 		};
 	};
@@ -494,7 +518,7 @@
 		rLen = 0;
 		rLoc = 0;
 		rType = 0;
-		vrLen = 691;
+		vrLen = 585;
 		vrLoc = 0;
 	};
 	3A77007312EE07CB007AF439 /* PBXTextBookmark */ = {
@@ -502,9 +526,9 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 37";
 		rLen = 0;
-		rLoc = 578;
+		rLoc = 590;
 		rType = 0;
-		vrLen = 749;
+		vrLen = 585;
 		vrLoc = 0;
 	};
 	3A77007612EE07E4007AF439 /* PBXTextBookmark */ = {
@@ -512,9 +536,9 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 37";
 		rLen = 0;
-		rLoc = 578;
+		rLoc = 590;
 		rType = 0;
-		vrLen = 749;
+		vrLen = 585;
 		vrLoc = 0;
 	};
 	3A77007D12EE0883007AF439 /* PBXTextBookmark */ = {
@@ -795,7 +819,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 28";
 		rLen = 0;
-		rLoc = 439;
+		rLoc = 443;
 		rType = 0;
 		vrLen = 499;
 		vrLoc = 0;
@@ -805,7 +829,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 28";
 		rLen = 14;
-		rLoc = 439;
+		rLoc = 443;
 		rType = 0;
 		vrLen = 516;
 		vrLoc = 0;
@@ -943,7 +967,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 22";
 		rLen = 0;
-		rLoc = 557;
+		rLoc = 569;
 		rType = 0;
 		vrLen = 525;
 		vrLoc = 0;
@@ -953,7 +977,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 22";
 		rLen = 0;
-		rLoc = 557;
+		rLoc = 569;
 		rType = 0;
 		vrLen = 525;
 		vrLoc = 0;
@@ -973,7 +997,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 21";
 		rLen = 0;
-		rLoc = 438;
+		rLoc = 442;
 		rType = 0;
 		vrLen = 495;
 		vrLoc = 0;
@@ -1000,8 +1024,8 @@
 		isa = PBXTextBookmark;
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 21";
-		rLen = 119;
-		rLoc = 438;
+		rLen = 127;
+		rLoc = 442;
 		rType = 0;
 		vrLen = 560;
 		vrLoc = 0;
@@ -1028,8 +1052,8 @@
 		isa = PBXTextBookmark;
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 21";
-		rLen = 119;
-		rLoc = 438;
+		rLen = 127;
+		rLoc = 442;
 		rType = 0;
 		vrLen = 560;
 		vrLoc = 0;
@@ -1046,8 +1070,8 @@
 		isa = PBXTextBookmark;
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 22";
-		rLen = 119;
-		rLoc = 438;
+		rLen = 127;
+		rLoc = 442;
 		rType = 0;
 		vrLen = 581;
 		vrLoc = 0;
@@ -1057,7 +1081,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 22";
 		rLen = 0;
-		rLoc = 527;
+		rLoc = 535;
 		rType = 0;
 		vrLen = 585;
 		vrLoc = 0;
@@ -1067,7 +1091,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 20";
 		rLen = 0;
-		rLoc = 434;
+		rLoc = 438;
 		rType = 0;
 		vrLen = 585;
 		vrLoc = 0;
@@ -1077,7 +1101,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 22";
 		rLen = 0;
-		rLoc = 527;
+		rLoc = 535;
 		rType = 0;
 		vrLen = 585;
 		vrLoc = 0;
@@ -1087,7 +1111,7 @@
 		fRef = 3A77006B12EE072C007AF439 /* UnitTests.m */;
 		name = "UnitTests.m: 22";
 		rLen = 0;
-		rLoc = 527;
+		rLoc = 535;
 		rType = 0;
 		vrLen = 348;
 		vrLoc = 0;
