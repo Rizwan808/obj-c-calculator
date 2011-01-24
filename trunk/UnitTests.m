@@ -17,9 +17,9 @@
 	[brain performOperation:@"+"];
 	brain.operand = [@"5" doubleValue];
 	double result = [brain performOperation:@"="];
-	double need = 15.0;
+	double expected = 15.0;
 	
-	STAssertEquals(need, result, @"Error summ double value from '10' and from '5' must be %g, instead %g", need, result);
+	STAssertEquals(expected, result, @"Error summ double value from '10' and from '5' must be %g, instead %g", expected, result);
 	
 	[brain release];
 }
