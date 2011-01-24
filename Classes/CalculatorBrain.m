@@ -3,7 +3,7 @@
 //  Calculator
 //
 //  Created by Антон on 11.01.11.
-//  Copyright 2011 Штрих-М. All rights reserved.
+//  Copyright 2011 Home Basic. All rights reserved.
 //
 
 #import "CalculatorBrain.h"
