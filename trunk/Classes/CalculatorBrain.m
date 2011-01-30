@@ -22,7 +22,48 @@
 @synthesize warningOperation;
 @synthesize waitingOperation;
 
-@synthesize internalExpression;
+@synthesize internalExpression = _internalExpression;
+
++ (BOOL)isThisObjectAVariable:(id)object {
+	BOOL result = NO;
+	
+	if ([object isKindOfClass:[NSString class]]) {
+		NSUInteger objectLength = [object length];
+		if (objectLength > 1) {
+			NSString *vp = VARIABLE_PREFIX;
+			result = [[object substringToIndex:1] isEqual:vp];
+		}
+	}
+	
+	return result;
+}
+
++ (double)evaluateExpression:(NSArray *)anExpression
+		 usingVariableValues:(NSDictionary *)variables {
+	
+	CalculatorBrain *brain = [[CalculatorBrain alloc] init];
+	
+	for (id object in anExpression) {
+		if ([object isKindOfClass:[NSNumber class]]) {
+			brain.operand = [object doubleValue];
+		} else if ([object isKindOfClass:[NSString class]]) {
+			if ([CalculatorBrain isThisObjectAVariable:object]) {
+				
+			} else {
+				[brain performOperation:object];
+			}
+		}
+	}
+	
+	double result = brain.operand;
+	[brain release];
+	
+	return result;
+}
+
+- (NSArray *)internalExpression {
+	return [NSArray arrayWithArray:_internalExpression];
+}
 
 - (void)performWaitingOperation {
 	if ([@"+" isEqual:waitingOperation]) {
@@ -38,39 +79,50 @@
 	} else if ([@"*" isEqual:waitingOperation]) {
 		operand = waitingOperand * operand;
 	}
-/*	
-	NSNumber *objectOperand = [[[NSNumber alloc] initWithDouble:operand] autorelease];
-	[internalExpression addObject:objectOperand];
-*/
 }
 
-- (BOOL)isThisObjectAVariable:(id)object {
-	return [object isKindOfClass:[NSString class]] && [[object substringToIndex:1] isEqual:VARIABLE_PREFIX];
+- (BOOL)canAddOperandToExpression {
+	if (self.internalExpression.count > 0) {
+		id lastObject = [self.internalExpression objectAtIndex:self.internalExpression.count - 1];
+		
+		if ([lastObject isKindOfClass:[NSNumber class]])
+		{
+			warningOperation = @"Can't add: last object is an operand";
+			return NO;
+		}
+		
+		if ([CalculatorBrain isThisObjectAVariable:lastObject])
+		{
+			warningOperation = @"Can't add: last object is a variable";
+			return NO;
+		}
+	}
+
+	return YES;
 }
 
 - (void)setVariableAsOperand:(NSString *)variableName {
-	if (internalExpression.count > 0) {
-		id lastObject = [internalExpression objectAtIndex:internalExpression.count - 1];
+	if ([self canAddOperandToExpression]) {
+		NSString *vp = VARIABLE_PREFIX;
+		[_internalExpression addObject:[vp stringByAppendingString:variableName]];
+	}
+}
 
-		if ([lastObject isKindOfClass:[NSNumber class]])
-		{
-			warningOperation = @"Can't save variable with operand";
-			return;
-		}
-
-		if ([self isThisObjectAVariable:lastObject])
-		{
-			warningOperation = @"Can't operate variable twice";
-			return;
-		}
+- (void)setOperand:(double)anOperand {
+	operand = anOperand;
+	
+	if ([self canAddOperandToExpression]) {
+		NSNumber *objectOperand = [[NSNumber alloc] initWithDouble:anOperand];
+		[_internalExpression addObject:objectOperand];
 	}
 	
-	[internalExpression addObject:[VARIABLE_PREFIX stringByAppendingString:variableName]];
 }
 
 - (double)performOperation:(NSString *)operation {
 	warningOperation = @"";
-	
+
+	[_internalExpression addObject:[[NSString alloc] initWithString:operation]];
+
 	if ([@"sqrt" isEqual:operation]) {
 		if (operand >= 0) {
 			operand = sqrt(operand);
@@ -89,7 +141,7 @@
 		}
 	} else if ([@"C" isEqual:operation]) {
 		operand = 0;
-		[internalExpression removeAllObjects];
+		[_internalExpression removeAllObjects];
 	} else if ([@"π" isEqual:operation]) {
 		operand = M_PI;
 	} else if ([@"sin" isEqual:operation]) {
@@ -118,9 +170,20 @@
 		waitingOperand = operand;
 	}
 	
-	[internalExpression addObject:operation];
-	
 	return operand;
+}
+
+- (id)init {
+	if (self = [super init]) {
+		_internalExpression = [[NSMutableArray alloc] init];
+	}
+	
+	return self;
+}
+
+- (void)dealloc {
+	[_internalExpression release];
+	[super dealloc];
 }
 
 @end

@@ -612,7 +612,7 @@
 					<object class="IBUILabel" id="283592715">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 20}, {280, 21}}</string>
+						<string key="NSFrame">{{20, 27}, {280, 15}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -620,6 +620,11 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText"/>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">Helvetica</string>
+							<double key="NSSize">12</double>
+							<int key="NSfFlags">16</int>
+						</object>
 						<reference key="IBUITextColor" ref="743606422"/>
 						<reference key="IBUIHighlightedColor" ref="446932875"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -1222,10 +1227,10 @@
 							<reference ref="516518421"/>
 							<reference ref="893758420"/>
 							<reference ref="948901818"/>
-							<reference ref="305556493"/>
 							<reference ref="283592715"/>
 							<reference ref="702881014"/>
 							<reference ref="596469989"/>
+							<reference ref="305556493"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
