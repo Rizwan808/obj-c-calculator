@@ -12,27 +12,28 @@
 
 @interface CalculatorBrain : NSObject {
 	double operand;
+	NSMutableArray *_internalExpression;
 }
 
-- (double)performOperation:(NSString *)operation;
-- (void)setVariableAsOperand:(NSString *)variableName;
-
 @property (nonatomic) BOOL isItRadians;
-@property (nonatomic) double operand;
+@property (nonatomic, setter=setOperand) double operand;
 @property (nonatomic) double memoryValue;
 @property (nonatomic, retain) NSString *warningOperation;
 
-@property (readonly, copy) NSMutableArray *internalExpression;
+@property (readonly, getter=internalExpression) NSArray *internalExpression;
 
-/*
-+ (double)evaluateExpression:(id)anExpression
++ (double)evaluateExpression:(NSArray *)anExpression
 		 usingVariableValues:(NSDictionary *)variables;
 
-+ (NSSet *)variablesInExpression:(id)anExpression;
-+ (NSString *)descriptionOfExpression:(id)anExpression;
+/*
++ (NSSet *)variablesInExpression:(NSArray)anExpression;
++ (NSString *)descriptionOfExpression:(NSArray)anExpression;
 
-+ (id)propertyListForExpression:(id)anExpression;
++ (id)propertyListForExpression:(NSArray)anExpression;
 + (id)expressionForPropertyList:(id)propertyList;
 */
+
+- (double)performOperation:(NSString *)operation;
+- (void)setVariableAsOperand:(NSString *)variableName;
 
 @end
