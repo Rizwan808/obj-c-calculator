@@ -48,7 +48,7 @@
 	double result = [brain performOperation:@"="];
 	double expected = 15.0;
 	
-	STAssertEquals(expected, result, @"Error summ double value from '10' and from '5' must be %g, instead %g",
+	STAssertEquals(expected, result, @"Error: addition double value from '10' and from '5' must be %g, instead %g",
 				   expected, result);
 	
 	NSLog(@"%@ end", self.name);
@@ -79,7 +79,45 @@
 	
 	[variables release];
 	
-	STAssertEquals(expected, result, @"Error substract double value '7' from '11' must be %g, instead %g",
+	STAssertEquals(expected, result, @"Error: substraction double value '7' from '11' must be %g, instead %g",
+				   expected, result);
+	
+	NSLog(@"%@ end", self.name);
+}
+
+/* testEvaluateExpressionDivide15on3plusX performs a simple division test: 15 / 3 + x = 7.0.
+ * The test has ten parts:
+ *  1. Through the operand @property, feed the calculator's brain the opearnd 15.
+ *  2. Through the performOperation: method, feed the calculator's brain the operator /.
+ *  3. Through the operand @property, feed the calculator's brain the opearnd 3.
+ *  4. Through the performOperation: method, feed the calculator's brain the operator =.
+ *  5. Through the performOperation: method, feed the calculator's brain the operator +.
+ *  6. Through the setVariableAsOperand: method, feed the calculator's brain the variable %x.
+ *  7. Through the performOperation: method, feed the calculator's brain the operator =.
+ *  8. Initialize list of the variable values with an NSDictionary collection with one
+		object inside - the %x variable with value 2.0.
+ *  9. Perform evaluateExpression:usingVariableValues: method.
+ * 10. Confirm that result of the last operation is 5.0.
+ */
+- (void) testEvaluateExpressionDivide15on3plusX {
+	NSLog(@"%@ start", self.name);   // self.name is the name of the test-case method.
+	
+	brain.operand = [@"15" doubleValue];
+	[brain performOperation:@"/"];
+	brain.operand = [@"3" doubleValue];
+	[brain performOperation:@"="];
+	[brain performOperation:@"+"];
+	[brain setVariableAsOperand:@"x"];
+	[brain performOperation:@"="];
+	
+	NSString *variableName = [NSString stringWithString:@"%x"];
+	NSNumber *variableValue = [NSNumber numberWithDouble:2.0];
+	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:variableValue, variableName, nil];
+
+	double result = [CalculatorBrain evaluateExpression:brain.internalExpression usingVariableValues:variables];
+	double expected = 7.0;
+	
+	STAssertEquals(expected, result, @"Error: division double value '15' on '3' and plus %%x = 2 must be %g, instead %g",
 				   expected, result);
 	
 	NSLog(@"%@ end", self.name);

@@ -48,7 +48,7 @@
 			brain.operand = [object doubleValue];
 		} else if ([object isKindOfClass:[NSString class]]) {
 			if ([CalculatorBrain isThisObjectAVariable:object]) {
-				
+				brain.operand = [[variables objectForKey:object] doubleValue];
 			} else {
 				[brain performOperation:object];
 			}
