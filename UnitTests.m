@@ -31,7 +31,7 @@
 	NSLog(@"%@ tearDown", self.name);
 }
 
-/* testSumm10and5 performs a simple addition test: 10.0 + 5 = 15.0.
+/* testSum10and5 performs a simple addition test: 10.0 + 5 = 15.0.
  * The test has five parts:
  * 1. Through the operand @property, feed the calculator's brain the opearnd 10.0.
  * 2. Through the performOperation: method, feed the calculator's brain the operator +.
@@ -39,7 +39,7 @@
  * 4. Through the performOperation: method, feed the calculator's brain the operator =.
  * 5. Confirm that result of the last operation is 15.0.
  */
-- (void) testSumm10and5 {
+- (void) testSum10and5 {
 	NSLog(@"%@ start", self.name);   // self.name is the name of the test-case method.
 	
 	brain.operand = [@"10.0" doubleValue];
@@ -48,13 +48,13 @@
 	double result = [brain performOperation:@"="];
 	double expected = 15.0;
 	
-	STAssertEquals(expected, result, @"Error: addition double value from '10' and from '5' must be %g, instead %g",
-				   expected, result);
+	STAssertEquals(expected, result, @"Error: the sum of '10.0' and '5'\
+				   must be %g, instead %g", expected, result);
 	
 	NSLog(@"%@ end", self.name);
 }
 
-/* testEvaluateExpressionSubstract11and7 performs a simple substraction test: 11 - 7.0 = 4.0.
+/* testEvaluateExpressionSubtract11and7 performs a simple subtraction test: 11 - 7.0 = 4.0.
  * The test has seven parts:
  * 1. Through the operand @property, feed the calculator's brain the opearnd 11.
  * 2. Through the performOperation: method, feed the calculator's brain the operator -.
@@ -64,7 +64,7 @@
  * 6. Perform evaluateExpression:usingVariableValues: method.
  * 7. Confirm that result of the last operation is 4.0.
  */
-- (void) testEvaluateExpressionSubstract11and7 {
+- (void) testEvaluateExpressionSubtract11and7 {
 	NSLog(@"%@ start", self.name);   // self.name is the name of the test-case method.
 	
 	brain.operand = [@"11" doubleValue];
@@ -79,8 +79,8 @@
 	
 	[variables release];
 	
-	STAssertEquals(expected, result, @"Error: substraction double value '7' from '11' must be %g, instead %g",
-				   expected, result);
+	STAssertEquals(expected, result, @"Error: the subtraction of '7.0' from '11'\
+				   leaves %g, instead %g", expected, result);
 	
 	NSLog(@"%@ end", self.name);
 }
@@ -95,7 +95,7 @@
  *  6. Through the setVariableAsOperand: method, feed the calculator's brain the variable x.
  *  7. Through the performOperation: method, feed the calculator's brain the operator =.
  *  8. Initialize list of the variable values with an NSDictionary collection with one
-		object inside - the %x variable with value 2.0.
+		object inside - the %x variable with double value 2.1.
  *  9. Perform evaluateExpression:usingVariableValues: method.
  * 10. Confirm that result of the last operation is 5.0.
  */
@@ -111,15 +111,14 @@
 	[brain performOperation:@"="];
 	
 	NSString *variableName = [NSString stringWithString:@"%x"];
-	NSNumber *variableValue = [NSNumber numberWithDouble:2.0];
+	NSNumber *variableValue = [NSNumber numberWithDouble:2.1];
 	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:variableValue, variableName, nil];
 
 	double result = [CalculatorBrain evaluateExpression:brain.internalExpression usingVariableValues:variables];
-	double expected = 7.0;
+	double expected = 7.1;
 	
-	STAssertEquals(expected, result, @"Error: division double value \
-				   '15' on '3' and plus %%x = 2 must be %g, instead %g",
-				   expected, result);
+	STAssertEquals(expected, result, @"Error: the division '15' by '3' and plus %%x = 2.1\
+				   must be %g, instead %g", expected, result);
 	
 	NSLog(@"%@ end", self.name);
 }
