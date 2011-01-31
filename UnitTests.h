@@ -12,6 +12,7 @@
 
 @interface UnitTests : SenTestCase {
 	double testOperand;
+	CalculatorBrain *brain;
 }
 
 @end
