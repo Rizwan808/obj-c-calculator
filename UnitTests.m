@@ -92,7 +92,7 @@
  *  3. Through the operand @property, feed the calculator's brain the opearnd 3.
  *  4. Through the performOperation: method, feed the calculator's brain the operator =.
  *  5. Through the performOperation: method, feed the calculator's brain the operator +.
- *  6. Through the setVariableAsOperand: method, feed the calculator's brain the variable %x.
+ *  6. Through the setVariableAsOperand: method, feed the calculator's brain the variable x.
  *  7. Through the performOperation: method, feed the calculator's brain the operator =.
  *  8. Initialize list of the variable values with an NSDictionary collection with one
 		object inside - the %x variable with value 2.0.
@@ -117,7 +117,8 @@
 	double result = [CalculatorBrain evaluateExpression:brain.internalExpression usingVariableValues:variables];
 	double expected = 7.0;
 	
-	STAssertEquals(expected, result, @"Error: division double value '15' on '3' and plus %%x = 2 must be %g, instead %g",
+	STAssertEquals(expected, result, @"Error: division double value \
+				   '15' on '3' and plus %%x = 2 must be %g, instead %g",
 				   expected, result);
 	
 	NSLog(@"%@ end", self.name);
