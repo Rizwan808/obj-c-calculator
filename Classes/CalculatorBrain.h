@@ -25,13 +25,11 @@
 + (double)evaluateExpression:(NSArray *)anExpression
 		 usingVariableValues:(NSDictionary *)variables;
 
-/*
-+ (NSSet *)variablesInExpression:(NSArray)anExpression;
-+ (NSString *)descriptionOfExpression:(NSArray)anExpression;
++ (NSSet *)variablesInExpression:(NSArray *)anExpression;
++ (NSString *)descriptionOfExpression:(NSArray *)anExpression;
 
-+ (id)propertyListForExpression:(NSArray)anExpression;
++ (id)propertyListForExpression:(id)anExpression;
 + (id)expressionForPropertyList:(id)propertyList;
-*/
 
 - (double)performOperation:(NSString *)operation;
 - (void)setVariableAsOperand:(NSString *)variableName;

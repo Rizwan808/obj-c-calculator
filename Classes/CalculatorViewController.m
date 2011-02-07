@@ -11,6 +11,7 @@
 @interface CalculatorViewController()
 @property (nonatomic, assign, readonly) CalculatorBrain *brain;
 @property (nonatomic) BOOL userIsInTheMiddleOfTypingANumber;
+@property (nonatomic) BOOL variableInTheExpression;
 @property (nonatomic) BOOL thePointHasBeenSet;
 @end
 
@@ -18,6 +19,7 @@
 
 @synthesize brain;
 @synthesize userIsInTheMiddleOfTypingANumber;
+@synthesize variableInTheExpression;
 @synthesize thePointHasBeenSet;
 
 - (CalculatorBrain *)brain {
@@ -64,8 +66,21 @@
 	display.text = result;
 }
 
+- (void)showDisplayText:(double)value {
+	if (variableInTheExpression) {
+		display.text = [CalculatorBrain descriptionOfExpression:brain.internalExpression];
+	} else {
+		display.text = [NSString stringWithFormat:@"%g", value];
+	}
+}
+
 - (IBAction)operationPressed:(UIButton *)sender {
 	NSString *operation = sender.titleLabel.text;
+	
+	if ([@"C" isEqual:operation]) {
+		userIsInTheMiddleOfTypingANumber = NO;
+		variableInTheExpression = NO;
+	}
 	
 	if (userIsInTheMiddleOfTypingANumber) {
 		double curDisplayValue = [display.text doubleValue];
@@ -77,7 +92,7 @@
 	}
 	
 	double result = [self.brain performOperation:operation];
-	display.text =[NSString stringWithFormat:@"%g", result];
+	[self showDisplayText:result];
 
 	warning.text = self.brain.warningOperation;
 
@@ -103,19 +118,24 @@
 - (IBAction)variablePressed:(UIButton *)sender {
 	[self.brain setVariableAsOperand:sender.titleLabel.text];
 	userIsInTheMiddleOfTypingANumber = NO;
+	variableInTheExpression = YES;
 
-	display.text = sender.titleLabel.text;
+	[self showDisplayText:0];
 	warning.text = self.brain.warningOperation;
 }
 
 - (IBAction)evaluatePressed:(UIButton *)sender {
+	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:2.0], @"%x",
+							   [NSNumber numberWithDouble:4.0], @"%a",
+							   [NSNumber numberWithDouble:3.0], @"%b",
+							   nil];
+	double result = [CalculatorBrain evaluateExpression:brain.internalExpression usingVariableValues:variables];
+	
+	display.text =[NSString stringWithFormat:@"%g", result];
 }
 
 - (IBAction)radianSwitched:(UISwitch *)sender {
 	self.brain.isItRadians = sender.on;
-}
-
-- (IBAction)evaluateTestPressed:(UIButton *)sender {
 }
 
 - (void)dealloc {
