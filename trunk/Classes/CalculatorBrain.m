@@ -61,6 +61,49 @@
 	return result;
 }
 
++ (NSSet *)variablesInExpression:(NSArray *)anExpression {
+	NSMutableSet *setOfVariables = [[NSMutableSet alloc] init];
+	
+	for (id object in anExpression) {
+		if ([CalculatorBrain isThisObjectAVariable:object] && [setOfVariables member:object] == nil) {
+			[setOfVariables addObject:object];
+		}
+	}
+	
+	NSSet *result = nil;
+	if (setOfVariables.count) {
+		result = [NSSet setWithSet:setOfVariables];
+	}
+	
+	[setOfVariables release];
+	
+	return result;
+}
+
++ (NSString *)descriptionOfExpression:(NSArray *)anExpression {
+	NSString *result = @"";
+	
+	for (id object in anExpression) {
+		if ([CalculatorBrain isThisObjectAVariable:object]) {
+			result = [result stringByAppendingString:[object substringFromIndex:1]];
+		} else if ([object isKindOfClass:[NSNumber class]]) {
+			result = [result stringByAppendingString:[object stringValue]];
+		} else {
+			result = [result stringByAppendingString:object];
+		}
+	}
+	
+	return result;
+}
+
++ (id)propertyListForExpression:(id)anExpression {
+	return nil;
+}
+
++ (id)expressionForPropertyList:(id)propertyList {
+	return nil;
+}
+
 - (NSArray *)internalExpression {
 	return [NSArray arrayWithArray:_internalExpression];
 }

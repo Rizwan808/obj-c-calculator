@@ -21,7 +21,6 @@
 - (IBAction)backspacePressed:(UIButton *)sender;
 - (IBAction)variablePressed:(UIButton *)sender;
 - (IBAction)evaluatePressed:(UIButton *)sender;
-- (IBAction)evaluateTestPressed:(UIButton *)sender;
 
 - (IBAction)radianSwitched:(UISwitch *)sender;
 

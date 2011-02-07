@@ -123,4 +123,69 @@
 	NSLog(@"%@ end", self.name);
 }
 
+/* testTwoVariablesInExpressionXandB this is a simple test, it puts three variables
+ *		x, b and x in the internal expression and get them out by calling
+ *		variablesInExpression() method. The result must contain two variables
+ *		x and b.
+ * The test has five parts:
+ * 1. Put variable x in the expression.
+ * 2. Put variable b in the expression.
+ * 3. Put variable x in the expression.
+ * 4. Call variablesInTheExpression() method.
+ * 5. Confirm that result set contain two variables x and b.
+ */
+- (void) testTwoVariablesInExpressionXandB {
+	NSLog(@"%@ start", self.name);   // self.name is the name of the test-case method.
+	
+	[brain setVariableAsOperand:@"x"];
+	[brain performOperation:@"*"];
+	[brain setVariableAsOperand:@"b"];
+	[brain performOperation:@"+"];
+	[brain setOperand:2.0];
+	[brain performOperation:@"-"];
+	[brain setVariableAsOperand:@"x"];
+	[brain performOperation:@"="];
+	
+	NSSet *result = [CalculatorBrain variablesInExpression:brain.internalExpression];
+	NSSet *expected = [[NSSet alloc] initWithObjects:@"%x", @"%b", nil];
+	
+	STAssertTrue([expected isEqualToSet:result], @"Error: the result set of the variables is not same as expected");
+	
+	NSLog(@"%@ end", self.name);
+}
+
+/* testExpressionStringAplus10minusBequals20 this is a simple test, it puts three variables
+ *		x, b and x in the internal expression and get them out by calling
+ *		variablesInExpression() method. The result must contain two variables
+ *		x and b.
+ * The test has five parts:
+ * 1. Put variable x in the expression.
+ * 2. Put variable b in the expression.
+ * 3. Put variable x in the expression.
+ * 4. Call variablesInTheExpression() method.
+ * 5. Confirm that result set contain two variables x and b.
+ */
+- (void) testExpressionStringAplus10minusBmultXdiv5equal {
+	NSLog(@"%@ start", self.name);   // self.name is the name of the test-case method.
+	
+	[brain setVariableAsOperand:@"a"];
+	[brain performOperation:@"+"];
+	[brain setOperand:10.0];
+	[brain performOperation:@"-"];
+	[brain setVariableAsOperand:@"b"];
+	[brain performOperation:@"*"];
+	[brain setVariableAsOperand:@"x"];
+	[brain performOperation:@"/"];
+	[brain setOperand:5.0];
+	[brain performOperation:@"="];
+	
+	NSString *result = [CalculatorBrain descriptionOfExpression:brain.internalExpression];
+	NSString *expected = @"a+10-b*x/5=";
+	
+	STAssertEqualObjects(expected, result, @"Error: wrong expression description\
+				   must be '%@', instead '%@'", expected, result);
+	
+	NSLog(@"%@ end", self.name);
+}
+
 @end
