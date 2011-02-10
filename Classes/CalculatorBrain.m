@@ -96,12 +96,12 @@
 	return result;
 }
 
-+ (id)propertyListForExpression:(id)anExpression {
-	return nil;
++ (NSArray *)propertyListForExpression:(NSArray *)anExpression {
+	return [[NSArray alloc] initWithArray:anExpression];
 }
 
-+ (id)expressionForPropertyList:(id)propertyList {
-	return nil;
++ (NSArray *)expressionForPropertyList:(NSArray *)propertyList {
+	return [[NSArray alloc] initWithArray:propertyList];
 }
 
 - (NSArray *)internalExpression {
@@ -155,7 +155,7 @@
 	operand = anOperand;
 	
 	if ([self canAddOperandToExpression]) {
-		NSNumber *objectOperand = [[NSNumber alloc] initWithDouble:anOperand];
+		NSNumber *objectOperand = [NSNumber numberWithDouble:anOperand];
 		[_internalExpression addObject:objectOperand];
 	}
 	
