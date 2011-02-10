@@ -54,6 +54,31 @@
 	NSLog(@"%@ end", self.name);
 }
 
+/* testClearJob performs a correct clear operation test: 3 + C 3 +.
+ * The test has five parts:
+ * 1. Through the operand @property, feed the calculator's brain the opearnd 3.
+ * 2. Through the performOperation: method, feed the calculator's brain the operator +.
+ * 3. Through the performOperation: method, feed the calculator's brain the operator C.
+ * 4. Through the operand @property, feed the calculator's brain the opearnd 3.
+ * 5. Through the performOperation: method, feed the calculator's brain the operator +.
+ * 6. Confirm that result of the last operation is 3.0.
+ */
+- (void) testClearJob {
+	NSLog(@"%@ start", self.name);   // self.name is the name of the test-case method.
+	
+	brain.operand = [@"3" doubleValue];
+	[brain performOperation:@"+"];
+	[brain performOperation:@"C"];
+	brain.operand = [@"3" doubleValue];
+	double result = [brain performOperation:@"+"];
+	double expected = 3.0;
+	
+	STAssertEquals(expected, result, @"Error: the result of this test\
+				   must be %g, instead %g", expected, result);
+	
+	NSLog(@"%@ end", self.name);
+}
+
 /* testEvaluateExpressionSubtract11and7 performs a simple subtraction test: 11 - 7.0 = 4.0.
  * The test has seven parts:
  * 1. Through the operand @property, feed the calculator's brain the opearnd 11.

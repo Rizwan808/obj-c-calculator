@@ -11,7 +11,6 @@
 @interface CalculatorViewController()
 @property (nonatomic, assign, readonly) CalculatorBrain *brain;
 @property (nonatomic) BOOL userIsInTheMiddleOfTypingANumber;
-@property (nonatomic) BOOL variableInTheExpression;
 @property (nonatomic) BOOL thePointHasBeenSet;
 @end
 
@@ -19,7 +18,6 @@
 
 @synthesize brain;
 @synthesize userIsInTheMiddleOfTypingANumber;
-@synthesize variableInTheExpression;
 @synthesize thePointHasBeenSet;
 
 - (CalculatorBrain *)brain {
@@ -66,21 +64,25 @@
 	display.text = result;
 }
 
-- (void)showDisplayText:(double)value {
-	if (variableInTheExpression) {
+- (void)showDisplayText:(double)value andOperation:(NSString *)operation {
+	if ([CalculatorBrain variablesInExpression:brain.internalExpression].count > 0) {
 		display.text = [CalculatorBrain descriptionOfExpression:brain.internalExpression];
 	} else {
 		display.text = [NSString stringWithFormat:@"%g", value];
+
+		if ([@"/" isEqual:operation] ||
+			[@"*" isEqual:operation] ||
+			[@"-" isEqual:operation] ||
+			[@"+" isEqual:operation]) {
+			curOperation.text = [display.text stringByAppendingString:operation];
+		} else {
+			curOperation.text = @"";
+		}
 	}
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
 	NSString *operation = sender.titleLabel.text;
-	
-	if ([@"C" isEqual:operation]) {
-		userIsInTheMiddleOfTypingANumber = NO;
-		variableInTheExpression = NO;
-	}
 	
 	if (userIsInTheMiddleOfTypingANumber) {
 		double curDisplayValue = [display.text doubleValue];
@@ -90,9 +92,6 @@
 			userIsInTheMiddleOfTypingANumber = NO;
 		}
 	}
-	
-	double result = [self.brain performOperation:operation];
-	[self showDisplayText:result];
 
 	warning.text = self.brain.warningOperation;
 
@@ -102,14 +101,8 @@
 		memory.text = [NSString stringWithFormat:@"%g", self.brain.memoryValue];
 	}
 	
-	if ([@"/" isEqual:operation] ||
-		[@"*" isEqual:operation] ||
-		[@"-" isEqual:operation] ||
-		[@"+" isEqual:operation]) {
-		curOperation.text = [display.text stringByAppendingString:operation];
-	} else {
-		curOperation.text = @"";
-	}
+	double result = [self.brain performOperation:operation];
+	[self showDisplayText:result andOperation:operation];
 	
 	NSRange displayPointRange = [display.text rangeOfString:@"."];
 	thePointHasBeenSet = displayPointRange.length > 0;
@@ -118,9 +111,8 @@
 - (IBAction)variablePressed:(UIButton *)sender {
 	[self.brain setVariableAsOperand:sender.titleLabel.text];
 	userIsInTheMiddleOfTypingANumber = NO;
-	variableInTheExpression = YES;
 
-	[self showDisplayText:0];
+	[self showDisplayText:0 andOperation:@""];
 	warning.text = self.brain.warningOperation;
 }
 

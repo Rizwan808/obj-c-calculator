@@ -155,8 +155,7 @@
 	operand = anOperand;
 	
 	if ([self canAddOperandToExpression]) {
-		NSNumber *objectOperand = [NSNumber numberWithDouble:anOperand];
-		[_internalExpression addObject:objectOperand];
+		[_internalExpression addObject:[NSNumber numberWithDouble:anOperand]];
 	}
 	
 }
@@ -164,7 +163,7 @@
 - (double)performOperation:(NSString *)operation {
 	warningOperation = @"";
 
-	[_internalExpression addObject:[[NSString alloc] initWithString:operation]];
+	[_internalExpression addObject:[NSString stringWithString:operation]];
 
 	if ([@"sqrt" isEqual:operation]) {
 		if (operand >= 0) {
@@ -184,6 +183,7 @@
 		}
 	} else if ([@"C" isEqual:operation]) {
 		operand = 0;
+		waitingOperand = 0;
 		[_internalExpression removeAllObjects];
 	} else if ([@"π" isEqual:operation]) {
 		operand = M_PI;
