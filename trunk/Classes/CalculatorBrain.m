@@ -48,11 +48,21 @@
 			brain.operand = [object doubleValue];
 		} else if ([object isKindOfClass:[NSString class]]) {
 			if ([CalculatorBrain isThisObjectAVariable:object]) {
-				brain.operand = [[variables objectForKey:object] doubleValue];
+				id value = [variables objectForKey:object];
+				if (value == nil) {
+					brain.warningOperation = [brain.warningOperation stringByAppendingFormat:@"undefined variable %@", object];
+					brain.operand = 0;
+					break;
+				}
+				brain.operand = [value doubleValue];
 			} else {
 				[brain performOperation:object];
 			}
 		}
+	}
+	
+	if ( (anExpression.count > 0) && !([[anExpression lastObject] isEqual:@"="]) ) {
+		[brain performOperation:@"="];
 	}
 	
 	double result = brain.operand;
@@ -144,7 +154,16 @@
 	return YES;
 }
 
+- (void)newInternalExpression {
+	if (_internalExpression == nil) {
+		_internalExpression = [[NSMutableArray alloc] init];
+		NSLog(@"expression = %@", self.internalExpression);
+	}
+}
+
 - (void)setVariableAsOperand:(NSString *)variableName {
+	[self newInternalExpression];
+	
 	if ([self canAddOperandToExpression]) {
 		NSString *vp = VARIABLE_PREFIX;
 		[_internalExpression addObject:[vp stringByAppendingString:variableName]];
@@ -152,15 +171,18 @@
 }
 
 - (void)setOperand:(double)anOperand {
+	[self newInternalExpression];
+	
 	operand = anOperand;
 	
 	if ([self canAddOperandToExpression]) {
 		[_internalExpression addObject:[NSNumber numberWithDouble:anOperand]];
 	}
-	
 }
 
 - (double)performOperation:(NSString *)operation {
+	[self newInternalExpression];
+	
 	warningOperation = @"";
 
 	[_internalExpression addObject:[NSString stringWithString:operation]];
@@ -214,14 +236,6 @@
 	}
 	
 	return operand;
-}
-
-- (id)init {
-	if (self = [super init]) {
-		_internalExpression = [[NSMutableArray alloc] init];
-	}
-	
-	return self;
 }
 
 - (void)dealloc {

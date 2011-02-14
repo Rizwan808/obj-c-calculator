@@ -10,11 +10,12 @@
 #import "CalculatorBrain.h"
 
 @interface CalculatorViewController : UIViewController {
-	IBOutlet UILabel *display;
-	IBOutlet UILabel *warning;
-	IBOutlet UILabel *memory;
-	IBOutlet UILabel *curOperation;
 }
+
+@property (nonatomic, retain) IBOutlet UILabel *display;
+@property (nonatomic, retain) IBOutlet UILabel *warning;
+@property (nonatomic, retain) IBOutlet UILabel *memory;
+@property (nonatomic, retain) IBOutlet UILabel *curOperation;
 
 - (IBAction)digitPressed:(UIButton *)sender;
 - (IBAction)operationPressed:(UIButton *)sender;

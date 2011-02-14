@@ -16,17 +16,14 @@
 
 @implementation CalculatorViewController
 
+@synthesize display;
+@synthesize warning;
+@synthesize memory;
+@synthesize curOperation;
+
 @synthesize brain;
 @synthesize userIsInTheMiddleOfTypingANumber;
 @synthesize thePointHasBeenSet;
-
-- (CalculatorBrain *)brain {
-	if (!brain) {
-		brain = [[CalculatorBrain alloc] init];
-	}
-	
-	return brain;
-}
 
 - (IBAction)digitPressed:(UIButton *)sender {
 	NSString *digit = [sender titleLabel].text;
@@ -49,6 +46,9 @@
 		display.text = digit;
 		userIsInTheMiddleOfTypingANumber = YES;
 	}
+	
+	NSRange displayPointRange = [display.text rangeOfString:@"."];
+	thePointHasBeenSet = displayPointRange.length > 0;
 }
 
 - (IBAction)backspacePressed:(UIButton *)sender {
@@ -86,37 +86,36 @@
 	
 	if (userIsInTheMiddleOfTypingANumber) {
 		double curDisplayValue = [display.text doubleValue];
-		self.brain.operand = curDisplayValue;
+		brain.operand = curDisplayValue;
 		
 		if (![@"-/+" isEqual:operation]) {
 			userIsInTheMiddleOfTypingANumber = NO;
 		}
 	}
-
-	warning.text = self.brain.warningOperation;
+	
+	double result = [brain performOperation:operation];
+	[self showDisplayText:result andOperation:operation];
+	
+	warning.text = brain.warningOperation;
 
 	if ([@"M" isEqual:operation]) {
 		memory.text = display.text;
 	} else if ([@"M+" isEqual:operation] || [@"MC" isEqual:operation]) {
-		memory.text = [NSString stringWithFormat:@"%g", self.brain.memoryValue];
+		memory.text = [NSString stringWithFormat:@"%g", brain.memoryValue];
 	}
-	
-	double result = [self.brain performOperation:operation];
-	[self showDisplayText:result andOperation:operation];
-	
-	NSRange displayPointRange = [display.text rangeOfString:@"."];
-	thePointHasBeenSet = displayPointRange.length > 0;
 }
 
 - (IBAction)variablePressed:(UIButton *)sender {
-	[self.brain setVariableAsOperand:sender.titleLabel.text];
+	[brain setVariableAsOperand:sender.titleLabel.text];
 	userIsInTheMiddleOfTypingANumber = NO;
 
 	[self showDisplayText:0 andOperation:@""];
-	warning.text = self.brain.warningOperation;
+	warning.text = brain.warningOperation;
 }
 
 - (IBAction)evaluatePressed:(UIButton *)sender {
+	userIsInTheMiddleOfTypingANumber = NO;
+
 	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:2.0], @"%x",
 							   [NSNumber numberWithDouble:4.0], @"%a",
 							   [NSNumber numberWithDouble:3.0], @"%b",
@@ -127,7 +126,18 @@
 }
 
 - (IBAction)radianSwitched:(UISwitch *)sender {
-	self.brain.isItRadians = sender.on;
+	brain.isItRadians = sender.on;
+}
+
+- (void)viewDidLoad {
+	brain = [[CalculatorBrain alloc] init];
+}
+
+- (void)viewDidUnload {
+	display = nil;
+	warning = nil;
+	memory = nil;
+	curOperation = nil;
 }
 
 - (void)dealloc {
